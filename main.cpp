@@ -24,6 +24,8 @@
 #include "BME680_BSEC.h"
 #include "VL53L0X.h"
 
+#include "agora_bsp.h"
+
 EventQueue queue(32 * EVENTS_EVENT_SIZE);
 Thread t;
 
@@ -77,6 +79,8 @@ void update_resources(void)
         default:
             break;
     }
+
+    float battery_voltage = agora_bsp_read_battery_voltage();
 
     printf("--------------------------------------------------------------------------------\n");
 
@@ -145,6 +149,8 @@ void update_resources(void)
     } else {
         printf("- VL53L0X Ranging Time-of-Flight Distance  : OUT OF RANGE\n");
     }
+
+    printf("- Battery Voltage                          : %0.2f V\n", battery_voltage);
 
     printf("--------------------------------------------------------------------------------\n\n");
 }
